@@ -1,2 +1,2 @@
 # JavaProject
-A java project for Advanced Object Programmig class
+A java project for Advanced Object Programming class
