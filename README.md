@@ -1,2 +1,2 @@
-# JavaProject
-A java project for Advanced Object Programming class
+# TrainTicketPlatform
+A java project for Advanced Object Programming class.
