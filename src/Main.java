@@ -6,7 +6,6 @@ public class Main {
         Car c2 = new DaylightCar(c1);
         Car c3 = new SleepingCar(4);
 
-        System.out.println(c1);
-        System.out.println(c2);
+
     }
 }

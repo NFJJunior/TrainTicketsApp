@@ -1,6 +1,7 @@
 package Car;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -76,5 +77,41 @@ public class SleepingCar extends Car {
             return false;
 
         return free4Beds.equals(sleepingCar.free4Beds) && free6Beds.equals(sleepingCar.free6Beds);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(CarID, type, nr4BedsCompartments, free4Beds, free6Beds);
+    }
+
+    public int nrFreeBeds(int bedType) {
+        if (bedType == 4)
+            return free4Beds.size();
+        else if (bedType == 6)
+            return free6Beds.size();
+
+        return -1;
+    }
+
+    public int reserveBed(int bedType) {
+        int bedNumber = -1;
+        Iterator<Integer> it;
+
+        if (bedType == 4) {
+            it = free4Beds.iterator();
+            if (it.hasNext()) {
+                bedNumber = it.next();
+                free4Beds.remove(bedNumber);
+            }
+
+        } else if (bedType == 6) {
+            it = free6Beds.iterator();
+            if (it.hasNext()) {
+                bedNumber = it.next();
+                free6Beds.remove(bedNumber);
+            }
+        }
+
+        return bedNumber;
     }
 }

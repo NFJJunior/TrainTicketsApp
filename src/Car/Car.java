@@ -28,8 +28,7 @@ public abstract class Car {
     //  Methods
     @Override
     public String toString() {
-        return "ID = " + CarID +
-                ", type = " + type;
+        return "ID = " + CarID + ", type = " + type;
     }
 
     @Override

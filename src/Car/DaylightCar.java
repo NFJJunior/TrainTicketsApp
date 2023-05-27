@@ -75,7 +75,6 @@ public final class DaylightCar extends Car {
     }
 
     public int reserveSeat() {
-
         int seatNumber = -1;
         Iterator<Integer> it = freeSeats.iterator();
 
