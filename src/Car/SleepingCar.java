@@ -53,7 +53,6 @@ public class SleepingCar extends Car {
     }
 
     //  Methods
-
     @Override
     public String toString() {
         return super.toString() +
@@ -65,23 +64,14 @@ public class SleepingCar extends Car {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SleepingCar sleepingCar = (SleepingCar) o;
-
-        if (CarID != sleepingCar.CarID)
-            return false;
-
-        if (!Objects.equals(type, sleepingCar.type))
-            return false;
-
-        if (nr4BedsCompartments != sleepingCar.nr4BedsCompartments)
-            return false;
-
-        return free4Beds.equals(sleepingCar.free4Beds) && free6Beds.equals(sleepingCar.free6Beds);
+        if (!super.equals(o)) return false;
+        SleepingCar that = (SleepingCar) o;
+        return nr4BedsCompartments == that.nr4BedsCompartments && nr6BedsCompartments == that.nr6BedsCompartments && Objects.equals(free4Beds, that.free4Beds) && Objects.equals(free6Beds, that.free6Beds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(CarID, type, nr4BedsCompartments, free4Beds, free6Beds);
+        return Objects.hash(super.hashCode(), nr4BedsCompartments, nr6BedsCompartments, free4Beds, free6Beds);
     }
 
     public int nrFreeBeds(int bedType) {

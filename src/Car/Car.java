@@ -5,13 +5,13 @@ import java.util.Objects;
 public abstract class Car {
     //  Attributes
 
-    protected static int incr = 0;
+    protected static int nrCars = 0;
     protected final int CarID;
     protected final String type;
 
     //  Constructors
     public Car(String type) {
-        CarID = ++incr;
+        CarID = ++nrCars;
         this.type = type;
     }
 
@@ -43,5 +43,4 @@ public abstract class Car {
     public int hashCode() {
         return Objects.hash(CarID, type);
     }
-
 }

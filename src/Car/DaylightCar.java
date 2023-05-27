@@ -17,20 +17,22 @@ public final class DaylightCar extends Car {
 
         int nrRows;
         switch (type) {
-            case "SecondClass":
+            case "SecondClass" -> {
                 nrRows = nrSeats / 8;
                 for (int i = 1; i <= nrRows; i++)
                     for (int j = 1; j <= 8; j++)
                         freeSeats.add(i * 10 + j);
-                break;
-            case "FirstClass:":
+            }
+            case "FirstClass:" -> {
                 nrRows = nrSeats / 6;
                 for (int i = 1; i <= nrRows; i++)
                     for (int j = 1; j <= 6; j++)
                         freeSeats.add(i * 10 + j);
-            case "Bycicles":
+            }
+            case "Bycicles" -> {
                 for (int i = 1; i <= nrSeats; i++)
                     freeSeats.add(i);
+            }
         }
     }
 
@@ -61,13 +63,14 @@ public final class DaylightCar extends Car {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DaylightCar daylightCar = (DaylightCar) o;
-        return CarID == daylightCar.CarID && Objects.equals(type, daylightCar.type) && nrSeats == daylightCar.nrSeats && freeSeats.equals(daylightCar.freeSeats);
+        if (!super.equals(o)) return false;
+        DaylightCar that = (DaylightCar) o;
+        return nrSeats == that.nrSeats && Objects.equals(freeSeats, that.freeSeats);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(CarID, type, nrSeats, freeSeats);
+        return Objects.hash(super.hashCode(), nrSeats, freeSeats);
     }
 
     public int nrFreeSeats() {
