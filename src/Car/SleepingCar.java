@@ -1,0 +1,80 @@
+package Car;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+public class SleepingCar extends Car {
+    //  Attributes
+    private final int nr4BedsCompartments;
+    private final int nr6BedsCompartments;
+    private Set<Integer> free4Beds = new HashSet<>();
+    private Set<Integer> free6Beds = new HashSet<>();
+
+    //  Constructors
+    public SleepingCar(int nr4BedsCompartments) {
+        super("SleepingCar");
+        this.nr4BedsCompartments = nr4BedsCompartments;
+        this.nr6BedsCompartments = 10 - nr4BedsCompartments;
+
+        for (int i = 1; i <= 10; i++)
+            if (i <= nr4BedsCompartments)
+                for (int j = 1; j <= 4; j++)
+                    free4Beds.add(i * 10 + j);
+            else
+                for (int j = 1; j <= 6; j++)
+                    free6Beds.add(i + 10 + j);
+    }
+
+    public SleepingCar(Car o) {
+        super(o);
+
+        if (o instanceof SleepingCar sleepingCar) {
+            nr4BedsCompartments = sleepingCar.nr4BedsCompartments;
+            nr6BedsCompartments = sleepingCar.nr6BedsCompartments;
+            free4Beds = new HashSet<>(sleepingCar.free4Beds);
+            free6Beds = new HashSet<>(sleepingCar.free6Beds);
+        } else {
+            nr4BedsCompartments = 0;
+            nr6BedsCompartments = 0;
+            free4Beds = null;
+            free6Beds = null;
+        }
+    }
+
+    //  Getters & Setters
+    public int getNr4Beds() {
+        return nr4BedsCompartments * 4;
+    }
+
+    public int getNr6Beds() {
+        return nr6BedsCompartments * 6;
+    }
+
+    //  Methods
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                ", 4Beds = " + getNr4Beds() +
+                ", 6Beds = " + getNr6Beds();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SleepingCar sleepingCar = (SleepingCar) o;
+
+        if (CarID != sleepingCar.CarID)
+            return false;
+
+        if (!Objects.equals(type, sleepingCar.type))
+            return false;
+
+        if (nr4BedsCompartments != sleepingCar.nr4BedsCompartments)
+            return false;
+
+        return free4Beds.equals(sleepingCar.free4Beds) && free6Beds.equals(sleepingCar.free6Beds);
+    }
+}
