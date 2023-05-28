@@ -2,7 +2,6 @@ package Train;
 
 import Car.*;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class InterCity extends Train {

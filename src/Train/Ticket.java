@@ -9,11 +9,11 @@ public class Ticket {
     private int carNumber;
     private double price;
 
-//    private String start;
-//    private String finish;
+    private String start = "Suceava";
+    private String finish = "Bucuresti Nord";
 
     //  Constructors
-    public Ticket(String type, int seatNumber, int carNumber, double price) {
+    Ticket(String type, int seatNumber, int carNumber, double price) {
         this.type = type;
         this.seatNumber = seatNumber;
         this.carNumber = carNumber;
@@ -56,7 +56,9 @@ public class Ticket {
     //  Methods
     @Override
     public String toString() {
-        return "Seat - " + seatNumber +
+        return start + " -> " + finish +
+                "\n" + type +
+                "\nSeat - " + seatNumber +
                 ", Car - " + carNumber;
     }
 

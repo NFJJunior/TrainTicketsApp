@@ -25,5 +25,13 @@ public class Main {
         t2.addCar(c4);
 
         t2.freeSeats();
+
+        Ticket t;
+        for (int i = 1; i <= 67; i++) {
+            t = t1.reserveSeat("FirstClass", false);
+            System.out.println(t);
+        }
+
+        t1.freeSeats();
     }
 }

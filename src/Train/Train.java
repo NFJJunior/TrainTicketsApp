@@ -62,7 +62,7 @@ public abstract class Train {
 
     public void freeSeats() {
         System.out.println("Train: " + this);
-        for(Map.Entry<String, Integer> item : freeSeats.entrySet()) {
+        for (Map.Entry<String, Integer> item : freeSeats.entrySet()) {
             if (item.getValue() > 0)
                 System.out.println(item.getKey() + ": " + item.getValue() + " seats");
         }
@@ -70,16 +70,36 @@ public abstract class Train {
 
     //    public abstract double ticketPrice();
 
-//    public Ticket reserveSeat(String type, boolean sleeping) {
-//        if (!sleeping) {
-//            for (int i = 0; i < nrCars; i++)
-//                if (cars.get(i) instanceof DaylightCar daylightCar && daylightCar.getType().equals(type) && daylightCar.nrFreeSeats() != 0) {
-//                    int seatNumber = daylightCar.reserveSeat();
-//                    return new Ticket(type, seatNumber, i + 1, 0);
-//                }
-//        }
-//        else
-//
-//        return null;
-//    }
+    public Ticket reserveSeat(String type, boolean sleeping) {
+        if (getFreeSeats(type) <= 0) {
+            System.out.println("There are no more seats for " + type + " on this train!");
+            return null;
+        }
+
+        if (!sleeping) {
+            for (int i = 0; i < nrCars; i++)
+                if (cars.get(i) instanceof DaylightCar daylightCar && daylightCar.getType().equals(type) && daylightCar.nrFreeSeats() > 0) {
+                    int seatNumber = daylightCar.reserveSeat();
+                    freeSeats.replace(type, freeSeats.get(type) - 1);
+                    return new Ticket(type, seatNumber, i + 1, 0);
+                }
+        } else {
+            for (int i = 0; i < nrCars; i++)
+                if (cars.get(i) instanceof SleepingCar sleepingCar) {
+                    if (type.equals("4Beds") && sleepingCar.nrFreeBeds(4) > 0) {
+                        int bedNumber = sleepingCar.reserveBed(4);
+                        freeSeats.replace("4Beds", freeSeats.get(type) - 1);
+                        return new Ticket(type, bedNumber, i + 1, 0);
+                    } else if (type.equals("6Beds") && sleepingCar.nrFreeBeds(6) > 0) {
+                        int bedNumber = sleepingCar.reserveBed(6);
+                        freeSeats.replace("6Beds", freeSeats.get(type) - 1);
+                        return new Ticket(type, bedNumber, i + 1, 0);
+                    }
+                }
+        }
+
+        System.out.println("An unexpected error had appeared! Please try again!");
+
+        return null;
+    }
 }
