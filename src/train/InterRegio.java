@@ -1,8 +1,7 @@
-package Train;
+package train;
 
-import Car.*;
+import car.*;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class InterRegio extends Train {

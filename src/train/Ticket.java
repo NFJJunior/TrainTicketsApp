@@ -1,4 +1,4 @@
-package Train;
+package train;
 
 import java.util.Objects;
 

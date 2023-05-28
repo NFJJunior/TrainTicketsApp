@@ -1,6 +1,6 @@
-package Train;
+package train;
 
-import Car.*;
+import car.*;
 
 import java.util.Objects;
 
