@@ -24,7 +24,7 @@ public class SleepingCar extends Car {
                     free4Beds.add(i * 10 + j);
             else
                 for (int j = 1; j <= 6; j++)
-                    free6Beds.add(i + 10 + j);
+                    free6Beds.add(i * 10 + j);
     }
 
     public SleepingCar(Car o) {

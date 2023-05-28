@@ -2,6 +2,7 @@ package Train;
 
 import Car.*;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class InterRegio extends Train {
@@ -9,13 +10,12 @@ public class InterRegio extends Train {
     private boolean hasSleepingCars = false;
     private boolean hasBicycles = false;
 
-    private int free4Beds = 0;
-    private int free6Beds = 0;
-    private int freeBicycles = 0;
-
     //  Constructors
     public InterRegio() {
         super("IR");
+        freeSeats.put("Bicycles", 0);
+        freeSeats.put("4Beds", 0);
+        freeSeats.put("6Beds", 0);
     }
 
     //  Setters & Getters
@@ -27,18 +27,6 @@ public class InterRegio extends Train {
         return hasBicycles;
     }
 
-    public int getFree4Beds() {
-        return free4Beds;
-    }
-
-    public int getFree6Beds() {
-        return free6Beds;
-    }
-
-    public int getFreeBicycles() {
-        return freeBicycles;
-    }
-
     //  Methods
     @Override
     public boolean equals(Object o) {
@@ -46,49 +34,46 @@ public class InterRegio extends Train {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         InterRegio that = (InterRegio) o;
-        return hasSleepingCars == that.hasSleepingCars && hasBicycles == that.hasBicycles && free4Beds == that.free4Beds && free6Beds == that.free6Beds && freeBicycles == that.freeBicycles;
+        return hasSleepingCars == that.hasSleepingCars && hasBicycles == that.hasBicycles;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), hasSleepingCars, hasBicycles, free4Beds, free6Beds, freeBicycles);
+        return Objects.hash(super.hashCode(), hasSleepingCars, hasBicycles);
     }
-
     @Override
     public void addCar(Car car) {
         if (car instanceof DaylightCar daylightCar) {
-            cars.add(new DaylightCar(daylightCar));
-            switch (daylightCar.getType()) {
-                case "FirstClass" -> {
-                    freeFirstSeats += daylightCar.nrFreeSeats();
-                }
-                case "SecondClass" -> {
-                    freeSecondSeats += daylightCar.nrFreeSeats();
-                }
-                case "Bicycles" -> {
+            if (freeSeats.containsKey(daylightCar.getType())) {
+                cars.add(new DaylightCar(daylightCar));
+                nrCars++;
+
+                if (daylightCar.getType().equals("Bicycles"))
                     hasBicycles = true;
-                    freeBicycles += daylightCar.nrFreeSeats();
-                }
-            }
-            System.out.println("The car had been added with success!");
+
+                int temp = freeSeats.get(daylightCar.getType());
+                temp += daylightCar.nrFreeSeats();
+                freeSeats.replace(daylightCar.getType(), temp);
+
+                System.out.println("The car had been added with succes!");
+            } else
+                System.out.println("An unexpected error had appeared! Please try again!");
         } else if (car instanceof SleepingCar sleepingCar) {
             cars.add(new SleepingCar(sleepingCar));
+            nrCars++;
+
             hasSleepingCars = true;
-            free4Beds += getFree4Beds();
-            free6Beds += getFree6Beds();
+
+            int temp4 = freeSeats.get("4Beds");
+            temp4 += sleepingCar.nrFreeBeds(4);
+            freeSeats.replace("4Beds", temp4);
+
+            int temp6 = freeSeats.get("6Beds");
+            temp6 += sleepingCar.nrFreeBeds(6);
+            freeSeats.replace("6Beds", temp6);
+
             System.out.println("The sleeping car had been added with success!");
         } else
             System.out.println("An unexpected error had appeared! Please try again!");
-    }
-
-    @Override
-    public void freeSeats() {
-        super.freeSeats();
-        if (freeBicycles != 0)
-            System.out.println("Bicycles: " + freeBicycles + "places");
-        if (free4Beds != 0)
-            System.out.println("4Beds: " + free4Beds + "beds");
-        if (free6Beds != 0)
-            System.out.println("4Beds: " + free6Beds + "beds");
     }
 }

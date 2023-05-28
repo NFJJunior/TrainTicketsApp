@@ -1,11 +1,14 @@
 package Train;
 
+import Car.*;
+
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class InterCity extends Train {
     //  Attributes
     private String WIFIPassword;
-    private boolean hasRestaurant;
+    private final boolean hasRestaurant;
 
     //  Constructors
     public InterCity(String WIFIPassword, boolean hasRestaurant) {
@@ -42,5 +45,21 @@ public class InterCity extends Train {
         return Objects.hash(super.hashCode(), WIFIPassword, hasRestaurant);
     }
 
+    @Override
+    public void addCar(Car car) {
+        if (car instanceof DaylightCar daylightCar) {
+            if (freeSeats.containsKey(daylightCar.getType())) {
+                cars.add(new DaylightCar(daylightCar));
+                nrCars++;
 
+                int temp = freeSeats.get(daylightCar.getType());
+                temp += daylightCar.nrFreeSeats();
+                freeSeats.replace(daylightCar.getType(), temp);
+
+                System.out.println("The car had been added with succes!");
+            } else
+                System.out.println("An unexpected error had appeared! Please try again!");
+        } else
+            System.out.println("An unexpected error had appeared! Please try again!");
+    }
 }

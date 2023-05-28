@@ -23,13 +23,13 @@ public final class DaylightCar extends Car {
                     for (int j = 1; j <= 8; j++)
                         freeSeats.add(i * 10 + j);
             }
-            case "FirstClass:" -> {
+            case "FirstClass" -> {
                 nrRows = nrSeats / 6;
                 for (int i = 1; i <= nrRows; i++)
                     for (int j = 1; j <= 6; j++)
                         freeSeats.add(i * 10 + j);
             }
-            case "Bycicles" -> {
+            case "Bicycles" -> {
                 for (int i = 1; i <= nrSeats; i++)
                     freeSeats.add(i);
             }
