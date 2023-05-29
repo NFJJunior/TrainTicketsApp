@@ -13,8 +13,12 @@ public class SleepingCar extends Car {
     private Set<Integer> free6Beds = new HashSet<>();
 
     //  Constructors
-    public SleepingCar(int nr4BedsCompartments) {
+    public SleepingCar(int nr4BedsCompartments) throws IllegalArgumentException {
         super("SleepingCar");
+
+        if (nr4BedsCompartments < 0 || nr4BedsCompartments > 10)
+            throw new IllegalArgumentException("Error: invalid argument");
+
         this.nr4BedsCompartments = nr4BedsCompartments;
         this.nr6BedsCompartments = 10 - nr4BedsCompartments;
 

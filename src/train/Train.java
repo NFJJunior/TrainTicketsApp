@@ -16,21 +16,26 @@ public abstract class Train {
     protected ArrayList<Car> cars;
     protected TreeMap<String, Integer> freeSeats;
 
-    protected int Route;
+    protected Route route;
 
     //  Constructors
     public Train(String TrainCode) {
-        TrainID = ++nrTrains;
+        TrainID = nrTrains++;
         this.TrainCode = TrainCode;
 
         cars = new ArrayList<>();
         freeSeats = new TreeMap<>();
+        route = null;
 
         freeSeats.put("FirstClass", 0);
         freeSeats.put("SecondClass", 0);
     }
 
     //  Setters & Getters
+    public int getTrainID() {
+        return TrainID;
+    }
+
     public String getTrainCode() {
         return TrainCode;
     }
@@ -42,7 +47,8 @@ public abstract class Train {
     //  Methods
     @Override
     public String toString() {
-        return TrainCode + TrainID;
+        return TrainCode + TrainID +
+                "\n" + route;
     }
 
     @Override
@@ -50,15 +56,25 @@ public abstract class Train {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Train train = (Train) o;
-        return TrainID == train.TrainID && nrCars == train.nrCars && Route == train.Route && Objects.equals(TrainCode, train.TrainCode) && Objects.equals(cars, train.cars) && Objects.equals(freeSeats, train.freeSeats);
+        return TrainID == train.TrainID && nrCars == train.nrCars && Objects.equals(TrainCode, train.TrainCode) && Objects.equals(cars, train.cars) && Objects.equals(freeSeats, train.freeSeats) && Objects.equals(route, train.route);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(TrainID, TrainCode, nrCars, cars, freeSeats, Route);
+        return Objects.hash(TrainID, TrainCode, nrCars, cars, freeSeats, route);
     }
 
     public abstract void addCar(Car car);
+
+    public void addRoute(Route route) {
+        if (route.getHasTrain()) {
+            System.out.println("This route is already used by a train!");
+            return;
+        }
+
+        route.setHasTrain(true);
+        this.route = route;
+    }
 
     public void freeSeats() {
         System.out.println("Train: " + this);
@@ -101,5 +117,13 @@ public abstract class Train {
         System.out.println("An unexpected error had appeared! Please try again!");
 
         return null;
+    }
+
+    public int totalDistance() {
+        return route.totalDistance();
+    }
+
+    public void showDetails() {
+        route.showDetails();
     }
 }

@@ -11,25 +11,31 @@ public final class DaylightCar extends Car {
     private Set<Integer> freeSeats = new HashSet<>();
 
     //  Constructors
-    public DaylightCar(String type, int nrSeats) {
+    public DaylightCar(String type, int nrSeats) throws IllegalArgumentException {
         super(type);
         this.nrSeats = nrSeats;
 
         int nrRows;
         switch (type) {
-            case "SecondClass" -> {
-                nrRows = nrSeats / 8;
-                for (int i = 1; i <= nrRows; i++)
-                    for (int j = 1; j <= 8; j++)
-                        freeSeats.add(i * 10 + j);
-            }
             case "FirstClass" -> {
+                if (nrSeats < 60 || nrSeats > 80)
+                    throw new IllegalArgumentException("Error: invalid argument");
                 nrRows = nrSeats / 6;
                 for (int i = 1; i <= nrRows; i++)
                     for (int j = 1; j <= 6; j++)
                         freeSeats.add(i * 10 + j);
             }
+            case "SecondClass" -> {
+                if (nrSeats < 80 || nrSeats > 120)
+                    throw new IllegalArgumentException("Error: invalid argument");
+                nrRows = nrSeats / 8;
+                for (int i = 1; i <= nrRows; i++)
+                    for (int j = 1; j <= 8; j++)
+                        freeSeats.add(i * 10 + j);
+            }
             case "Bicycles" -> {
+                if (nrSeats < 40 || nrSeats > 60)
+                    throw new IllegalArgumentException("Error: invalid argument");
                 for (int i = 1; i <= nrSeats; i++)
                     freeSeats.add(i);
             }
