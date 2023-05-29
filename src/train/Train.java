@@ -20,7 +20,7 @@ public abstract class Train {
 
     //  Constructors
     public Train(String TrainCode) {
-        TrainID = nrTrains++;
+        TrainID = ++nrTrains;
         this.TrainCode = TrainCode;
 
         cars = new ArrayList<>();
@@ -44,11 +44,15 @@ public abstract class Train {
         return freeSeats.getOrDefault(type, -1);
     }
 
+    public Route getRoute() {
+        return route;
+    }
+
     //  Methods
     @Override
     public String toString() {
         return TrainCode + TrainID +
-                "\n" + route;
+                "\n" + ((route != null) ? route : "No route");
     }
 
     @Override

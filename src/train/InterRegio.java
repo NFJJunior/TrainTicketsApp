@@ -54,7 +54,7 @@ public class InterRegio extends Train {
                 temp += daylightCar.nrFreeSeats();
                 freeSeats.replace(daylightCar.getType(), temp);
 
-                System.out.println("The car had been added with succes!");
+//                System.out.println("The car had been added with succes!");
             } else
                 System.out.println("An unexpected error had appeared! Please try again!");
         } else if (car instanceof SleepingCar sleepingCar) {
@@ -71,7 +71,7 @@ public class InterRegio extends Train {
             temp6 += sleepingCar.nrFreeBeds(6);
             freeSeats.replace("6Beds", temp6);
 
-            System.out.println("The sleeping car had been added with success!");
+//            System.out.println("The sleeping car had been added with success!");
         } else
             System.out.println("An unexpected error had appeared! Please try again!");
     }

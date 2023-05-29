@@ -55,7 +55,7 @@ public class InterCity extends Train {
                 temp += daylightCar.nrFreeSeats();
                 freeSeats.replace(daylightCar.getType(), temp);
 
-                System.out.println("The car had been added with succes!");
+//                System.out.println("The car had been added with succes!");
             } else
                 System.out.println("An unexpected error had appeared! Please try again!");
         } else
