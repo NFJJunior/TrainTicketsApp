@@ -1,8 +1,6 @@
 package train;
 
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -78,6 +76,10 @@ public class Route {
         return finishTime;
     }
 
+    public ArrayList<RouteEdge> getRoute() {
+        return route;
+    }
+
     //  Methods
     @Override
     public String toString() {
@@ -119,5 +121,14 @@ public class Route {
             helpingTime = route.get(i).finishTime;
         }
         System.out.printf("%-15s%-25s%-25s\n", helpingTime, finishStation, "");
+    }
+
+    public void showStations() {
+        for(int i = 0; i < nrStations - 1; i++) {
+            System.out.print(route.get(i).start + "->");
+            if (i % 5 == 4)
+                System.out.println();
+        }
+        System.out.println(finishStation);
     }
 }

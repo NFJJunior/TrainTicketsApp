@@ -99,6 +99,8 @@ public class AppService {
                 default -> System.out.println("Error: invalid number");
             }
         }
+
+        AuditService.addLogEntry("addCar");
     }
 
     public static void addTrain() {
@@ -143,6 +145,8 @@ public class AppService {
                 default -> System.out.println("Error: invalid number");
             }
         }
+
+        AuditService.addLogEntry("addTrain");
     }
 
     public static void addRoute() {
@@ -243,6 +247,8 @@ public class AppService {
 
             open = false;
         }
+
+        AuditService.addLogEntry("addRoute");
     }
 
     public static void showCar() {
@@ -255,6 +261,8 @@ public class AppService {
             System.out.print("Car " + i + ": ");
             System.out.println(cars.get(i));
         }
+
+        AuditService.addLogEntry("showCars");
     }
 
     public static void showTrain() {
@@ -264,6 +272,8 @@ public class AppService {
         }
 
         for (Train train : trains) System.out.println(train);
+
+        AuditService.addLogEntry("showTrains");
     }
 
     public static void showRoute() {
@@ -273,9 +283,11 @@ public class AppService {
         }
 
         for (int i = 0; i < routes.size(); i++) {
-            System.out.println("Route " + i + ":");
+            System.out.print("Route " + i + ":");
             System.out.println(routes.get(i));
         }
+
+        AuditService.addLogEntry("showRoutes");
     }
 
     public static void addCarToTrain() {
@@ -317,12 +329,14 @@ public class AppService {
                 return;
             }
 
-            if (index2 < 0 || index2 >= trains.size()) {
+            if (index2 < 0 || index2 >= cars.size()) {
                 System.out.println("Wrong index: ");
                 return;
             }
 
             train.addCar(cars.get(index2));
+
+            AuditService.addLogEntry("addCarToTrain");
         } else {
             System.out.println("You can choose just FirstClass and SecondClass cars!");
             AppService.showCar();
@@ -341,6 +355,8 @@ public class AppService {
             }
 
             train.addCar(cars.get(index2));
+
+            AuditService.addLogEntry("addCarToTrain");
         }
     }
 
@@ -426,6 +442,8 @@ public class AppService {
         }
 
         train.addRoute(routes.get(index2));
+
+        AuditService.addLogEntry("addRouteToTrain");
     }
 
     public static void freeSeats() {
@@ -450,6 +468,8 @@ public class AppService {
         }
 
         trains.get(index).freeSeats();
+
+        AuditService.addLogEntry("freeSeats");
     }
 
     public static void showDetails() {
@@ -474,6 +494,168 @@ public class AppService {
         }
 
         trains.get(index).showDetails();
+
+        AuditService.addLogEntry("showDetails");
+    }
+
+    public static void ticketPrice() {
+        if (trains.size() == 0) {
+            System.out.println("There are no trains left!");
+            return;
+        }
+
+        System.out.println("Choose an index between 0 and " + (trains.size() - 1) + ": ");
+
+        int index;
+        try {
+            index = Integer.parseInt(in.nextLine());
+        } catch (NumberFormatException err) {
+            System.out.println("Error: invalid format");
+            return;
+        }
+
+        if (index < 0 || index >= trains.size()) {
+            System.out.println("Wrong index: ");
+            return;
+        }
+
+        System.out.print("Choose what type of seat do you want to buy: ");
+        System.out.println("FirstClass/SecondClass/Bicycles/4Beds/6Beds");
+
+        String type = in.nextLine();
+
+        trains.get(index).showStations();
+
+        System.out.println("Choose the start station:");
+        String startStation = in.nextLine();
+
+        System.out.println("Choose the finish station:");
+        String finishStation = in.nextLine();
+
+        double price = trains.get(index).ticketPrice(type, startStation, finishStation);
+        if (price != -1) {
+            System.out.println("The price of a " + type + " ticket from " + startStation + " to " + finishStation + " is " + price + " lei!");
+
+            AuditService.addLogEntry("ticketPrice");
+        }
+    }
+
+    public static void buyTicket() {
+        if (trains.size() == 0) {
+            System.out.println("There are no trains left!");
+            return;
+        }
+
+        System.out.println("Choose an index between 0 and " + (trains.size() - 1) + ": ");
+
+        int index;
+        try {
+            index = Integer.parseInt(in.nextLine());
+        } catch (NumberFormatException err) {
+            System.out.println("Error: invalid format");
+            return;
+        }
+
+        if (index < 0 || index >= trains.size()) {
+            System.out.println("Wrong index: ");
+            return;
+        }
+
+        System.out.print("Choose what type of seat do you want to buy: ");
+        System.out.println("FirstClass/SecondClass/Bicycles/4Beds/6Beds");
+
+        boolean sleeping = false;
+        String type = in.nextLine();
+        if (type.equals("4Beds") || type.equals("6Beds"))
+            sleeping = true;
+
+        trains.get(index).showStations();
+
+        System.out.println("Choose the start station:");
+        String startStation = in.nextLine();
+
+        System.out.println("Choose the finish station:");
+        String finishStation = in.nextLine();
+
+        Ticket ticket = trains.get(index).reserveSeat(type, sleeping, startStation, finishStation);
+        if (ticket != null) {
+            System.out.println("Here is your ticket!");
+            System.out.println(ticket);
+
+            AuditService.addLogEntry("ticketPrice");
+        }
+    }
+
+    public static void removeSleepingCars() {
+        if (trains.size() == 0) {
+            System.out.println("There are no trains left!");
+            return;
+        }
+
+        for (Train train : trains)
+            train.removeSleepingCars();
+
+        AuditService.addLogEntry("removeSleepingCar");
+    }
+
+    public static void removeCar() {
+        System.out.println("Choose any index!");
+        AppService.showCar();
+
+        int index;
+        try {
+            index = Integer.parseInt(in.nextLine());
+        } catch (NumberFormatException err) {
+            System.out.println("Error: invalid format");
+            return;
+        }
+
+        if (index < 0 || index >= cars.size()) {
+            System.out.println("Wrong index: ");
+            return;
+        }
+
+        cars.remove(index);
+    }
+
+    public static void removeTrain() {
+        System.out.println("Choose any index!");
+        AppService.showTrain();
+
+        int index;
+        try {
+            index = Integer.parseInt(in.nextLine());
+        } catch (NumberFormatException err) {
+            System.out.println("Error: invalid format");
+            return;
+        }
+
+        if (index < 0 || index >= trains.size()) {
+            System.out.println("Wrong index: ");
+            return;
+        }
+
+        trains.remove(index);
+    }
+
+    public static void removeRoute() {
+        System.out.println("Choose any index!");
+        AppService.showRoute();
+
+        int index;
+        try {
+            index = Integer.parseInt(in.nextLine());
+        } catch (NumberFormatException err) {
+            System.out.println("Error: invalid format");
+            return;
+        }
+
+        if (index < 0 || index >= routes.size()) {
+            System.out.println("Wrong index: ");
+            return;
+        }
+
+        routes.remove(index);
     }
 
     public static void populate() {

@@ -21,7 +21,11 @@ public class Main {
             System.out.println("4. Add route to a train");
             System.out.println("5. Verify free seats");
             System.out.println("6. Show details about a train");
-            System.out.println("7. Exit platform");
+            System.out.println("7. Calculate the price of a ticket");
+            System.out.println("8. Buy a ticket");
+            System.out.println("9. Remove sleeping cars");
+            System.out.println("10. Delete an object");
+            System.out.println("11. Exit platform");
 
             int op;
             try {
@@ -81,41 +85,37 @@ public class Main {
                 case 4 -> AppService.addRouteToTrain();
                 case 5 -> AppService.freeSeats();
                 case 6 -> AppService.showDetails();
-                case 7 -> {
+                case 7 -> AppService.ticketPrice();
+                case 8 -> AppService.buyTicket();
+                case 9 -> AppService.removeSleepingCars();
+                case 10 -> {
+                    System.out.println("Choose which object to remove:");
+                    System.out.println("1. Car");
+                    System.out.println("2. Train");
+                    System.out.println("3. Route");
+
+                    int op2;
+                    try {
+                        op2 = Integer.parseInt(in.nextLine());
+                    }
+                    catch (NumberFormatException err) {
+                        System.out.println("Error: invalid format");
+                        continue;
+                    }
+
+                    switch (op2) {
+                        case 1 -> AppService.removeCar();
+                        case 2 -> AppService.removeTrain();
+                        case 3 -> AppService.removeRoute();
+                        default -> System.out.println("Error: invalid number");
+                    }
+                }
+                case 11 -> {
                     System.out.println("Have a good day!");
                     open = false;
                 }
                 default -> System.out.println("Error: invalid number");
             }
         }
-//        Car c1 = new DaylightCar("SecondClass", 80);
-//        Car c2 = new DaylightCar("FirstClass", 66);
-//        Car c3 = new SleepingCar(4);
-//        Car c4 = new DaylightCar("Bicycles", 50);
-//
-//        Train t1 = new InterRegio();
-//        t1.addCar(c1);
-//        t1.addCar(c1);
-//        t1.addCar(c2);
-//        t1.addCar(c3);
-//        t1.addCar(c4);
-//
-//        t1.freeSeats();
-//
-//        Train t2 = new InterCity("cfr2023", true);
-//        t2.addCar(c1);
-//        t2.addCar(c2);
-//        t2.addCar(c3);
-//        t2.addCar(c4);
-//
-//        t2.freeSeats();
-//
-//        Ticket t;
-//        for (int i = 1; i <= 67; i++) {
-//            t = t1.reserveSeat("FirstClass", false);
-//            System.out.println(t);
-//        }
-//
-//        t1.freeSeats();
     }
 }

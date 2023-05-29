@@ -4,62 +4,41 @@ import java.util.Objects;
 
 public class Ticket {
     //  Attributes
-    private String type;
-    private int seatNumber;
-    private int carNumber;
-    private double price;
+    private final int TrainID;
 
-    private String start = "Suceava";
-    private String finish = "Bucuresti Nord";
+    private final String TrainCode;
+
+    private final String type;
+    private final int seatNumber;
+    private final int carNumber;
+    private final double price;
+
+    private final String startStation;
+    private final String finishStation;
 
     //  Constructors
-    Ticket(String type, int seatNumber, int carNumber, double price) {
+    Ticket(int TrainID, String TrainCode, String type, int seatNumber, int carNumber, double price, String startStation, String finishStation) {
+        this.TrainID = TrainID;
+        this.TrainCode = TrainCode;
         this.type = type;
         this.seatNumber = seatNumber;
         this.carNumber = carNumber;
         this.price = price;
+        this.startStation = startStation;
+        this.finishStation = finishStation;
     }
 
     //  Setters & Getters
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public int getSeatNumber() {
-        return seatNumber;
-    }
-
-    public void setSeatNumber(int seatNumber) {
-        this.seatNumber = seatNumber;
-    }
-
-    public int getCarNumber() {
-        return carNumber;
-    }
-
-    public void setCarNumber(int carNumber) {
-        this.carNumber = carNumber;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
 
     //  Methods
     @Override
     public String toString() {
-        return start + " -> " + finish +
+        return TrainID + TrainCode +
+                "\n" + startStation + "->" + finishStation +
                 "\n" + type +
                 "\nSeat - " + seatNumber +
-                ", Car - " + carNumber;
+                ", Car - " + carNumber +
+                "\nPrice: " + price;
     }
 
     @Override
@@ -67,11 +46,11 @@ public class Ticket {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ticket ticket = (Ticket) o;
-        return seatNumber == ticket.seatNumber && carNumber == ticket.carNumber && Double.compare(ticket.price, price) == 0 && Objects.equals(type, ticket.type);
+        return TrainID == ticket.TrainID && seatNumber == ticket.seatNumber && carNumber == ticket.carNumber && Double.compare(ticket.price, price) == 0 && Objects.equals(TrainCode, ticket.TrainCode) && Objects.equals(type, ticket.type) && Objects.equals(startStation, ticket.startStation) && Objects.equals(finishStation, ticket.finishStation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, seatNumber, carNumber, price);
+        return Objects.hash(TrainID, TrainCode, type, seatNumber, carNumber, price, startStation, finishStation);
     }
 }
