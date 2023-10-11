@@ -1,5 +1,5 @@
-# TrainTicketsPlatform
-This is a Java project developed for the Advanced Object Programming class. The project aims to simulate a platform for purchasing train tickets, similar to cfrcalatori, and implements various features related to train ticket management.
+# TrainTicketsApp
+This is a Java project developed for the Advanced Object Programming class. The project aims to simulate an app for purchasing train tickets, similar to cfrcalatori, and implements various features related to train ticket management.
 ## Description
 The project consists of a train ticket platform that allows users to perform different operations related to train tickets. The system is designed using several classes to represent different entities and functionalities.
 
